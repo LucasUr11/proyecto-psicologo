@@ -8,7 +8,7 @@ export function Hero() {
             <Container size="4">
                 <Flex align="center" justify="between" gap="9" wrap="wrap-reverse">
 
-                    {/* BLOQUE DE TEXTO */}
+                    {/* BLOQUE DE TEXTO.- */}
                     <motion.div
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -49,7 +49,7 @@ export function Hero() {
                         </div>
                     </motion.div>
 
-                    {/* BLOQUE DE IMAGEN (Line Art o Metáfora) */}
+                    {/* BLOQUE DE IMAGEN.- */}
                     <Box className="relative flex-1 min-w-87.5">
                         <motion.div
                             initial={{ opacity: 0, x: 100 }}
@@ -64,7 +64,7 @@ export function Hero() {
                             />
                         </motion.div>
 
-                        {/* Cuadro decorativo que "enmarca" la imagen, similar a tu referencia */}
+                        {/* Cuadro decorativo que "enmarca" la imagen.- */}
                         <div className="absolute -top-6 -right-6 w-full h-full border border-purple-200 rounded-full -z-10" />
                     </Box>
 

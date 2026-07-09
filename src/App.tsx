@@ -1,30 +1,18 @@
 import { Theme } from "@radix-ui/themes";
-import { Navbar } from "./pages/Navbar";
-import { Hero } from "./pages/Hero";
-import { Services } from "./pages/Services";
-import { AboutMe } from "./pages/AboutMe";
-import { Articles } from "./pages/Articles";
-import { QuoteSection } from "./components/QuoteSection.";
-import { Faq } from "./components/Faq";
-import { Contact } from "./pages/Contact";
-import { Footer } from "./pages/Footer";
+import { Navbar } from "./components/layout/Navbar";
+import { Home } from "./pages/Home";
+import { Footer } from "./components/layout/Footer";
 
 function App() {
 
   return (
-    <div className="bg-gray-100">
+    <>
       <Theme>
         <Navbar />
-        <Hero />
-        <Services />
-        <AboutMe />
-        <Articles />
-        <QuoteSection />
-        <Faq />
-        <Contact />
+        <Home />
         <Footer />
       </Theme>
-    </div>
+    </>
   )
 }
 
