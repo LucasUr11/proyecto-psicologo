@@ -1,4 +1,3 @@
-import { Flex, Box, Text, Separator, Container } from "@radix-ui/themes"
 import { type Variants, motion } from "framer-motion";
 
 const articles = [
@@ -6,7 +5,7 @@ const articles = [
         date: "20 de Octubre, 2024",
         title: "La importancia del aquí y ahora",
         desc: "Explorando las bases de la terapia Gestalt para una vida más consciente.",
-        img: "/illustrations/aqui_y_ahora.svg", // Asegurate que la ruta en 'public' sea correcta
+        img: "/illustrations/aqui_y_ahora.svg",
     },
     {
         date: "15 de Noviembre, 2024",
@@ -22,96 +21,103 @@ const articles = [
     },
 ];
 
+// Animacion en cascada.-
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.2,
+            staggerChildren: 0.15,
         },
     },
 };
 
 const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
         opacity: 1,
         y: 0,
         transition: {
             duration: 0.6,
-            ease: "easeOut" //
+            ease: "easeOut"
         }
     },
 };
 
 export function Articles() {
     return (
-        <section id="articles" className="bg-white py-24">
-            <Container size="4">
+        <section id="articles" className="bg-white py-16 md:py-24 overflow-x-hidden">
+            <div className="max-w-7xl mx-auto px-6 md:px-10">
 
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
+                    className="flex flex-col items-center mb-12 md:mb-20 text-center"
                 >
-                    <Flex direction="column" align="center" className="mb-20 text-center">
-                        <Text size="2" weight="bold" className="tracking-[0.2em] uppercase text-[#b8938d] mb-4">
-                            Artículos
-                        </Text>
-                        <h2 className="text-5xl font-serif text-gray-800 mb-6">
-                            Últimos Artículos
-                        </h2>
-                        <motion.div
-                            initial={{ scaleX: 0, opacity: 0 }}
-                            whileInView={{ scaleX: 1, opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, ease: "circOut" }}
-                            style={{ originX: 0.5 }}
-                        >
-                            <Box className="w-20 h-1 bg-[#9fb1a5] rounded-full" />
-                        </motion.div>
-                    </Flex>
+                    <h4 className="text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-[#b8938d] mb-3">
+                        Artículos
+                    </h4>
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-800 mb-4 md:mb-6">
+                        Últimos Artículos
+                    </h2>
+
+                    {/* Línea decorativa */}
+                    <motion.div
+                        initial={{ scaleX: 0, opacity: 0 }}
+                        whileInView={{ scaleX: 1, opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: "circOut" }}
+                        style={{ originX: 0.5 }}
+                        className="w-20 h-1 bg-[#9fb1a5] rounded-full"
+                    />
                 </motion.div>
 
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+                    viewport={{ once: true, margin: "-50px" }} // Bajamos el margen de activación para pantallas chicas
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6 lg:gap-8"
                 >
                     {articles.map((article, index) => (
                         <motion.div
                             key={index}
                             variants={cardVariants}
-                            className="group p-8 rounded-3xl transition-all duration-500 hover:bg-[#faf9f6] hover:-translate-y-2 flex flex-col"
+                            // Eliminamos hover:-translate-y-2 nativo en mobile usando la query `md:hover:` para que no falle al hacer scroll táctil
+                            className="group p-6 sm:p-8 rounded-3xl border border-gray-50 bg-transparent transition-all duration-500 md:hover:bg-[#faf9f6] md:hover:-translate-y-2 flex flex-col items-center shadow-xs"
                         >
-                            {/* Contenedor de la Ilustración: Centrado con margen */}
-                            <Box className="w-40 h-40 mb-8 transition-transform duration-500 group-hover:scale-105">
+                            {/* Contenedor de la Ilustración */}
+                            <div className="w-32 h-32 sm:w-40 sm:h-40 mb-6 md:mb-8 transition-transform duration-500 group-hover:scale-105 flex items-center justify-center">
                                 <img
                                     src={article.img}
                                     alt={article.title}
                                     className="w-full h-full object-contain"
                                 />
-                            </Box>
+                            </div>
 
-                            <Text size="1" weight="bold" className="text-[#b8938d] mb-3 uppercase tracking-widest">
+                            {/* Fecha */}
+                            <span className="text-[11px] sm:text-xs font-bold text-[#b8938d] mb-2 md:mb-3 uppercase tracking-widest block">
                                 {article.date}
-                            </Text>
+                            </span>
 
-                            <Text as="div" size="5" weight="bold" className="text-gray-800 mb-4 text-center font-serif leading-tight">
+                            {/* Título del artículo */}
+                            <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 text-center font-serif leading-tight px-1">
                                 {article.title}
-                            </Text>
+                            </h3>
 
-                            <Separator orientation="horizontal" size="2" className="mb-4 bg-gray-100" />
+                            {/* Separador estético minimalista */}
+                            <div className="w-12 h-px bg-gray-200 mb-4" />
 
-                            <Text as="p" size="2" className="text-gray-500 text-center leading-relaxed px-2">
+                            {/* Descripción corta */}
+                            <p className="text-sm text-gray-500 text-center leading-relaxed px-1 sm:px-3">
                                 {article.desc}
-                            </Text>
+                            </p>
                         </motion.div>
                     ))}
                 </motion.div>
-            </Container>
+            </div>
         </section>
     )
 }
