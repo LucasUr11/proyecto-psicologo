@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-import { Container, Flex, Box, Text, Button } from "@radix-ui/themes";
 import { Mail, Phone, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -30,83 +29,130 @@ export function Contact() {
   };
 
   return (
-    <section id="contacto" className="py-24 bg-white">
-      <Container size="4">
-        <Flex gap="9" direction={{ initial: "column", md: "row" }}>
+    <section id="contacto" className="py-16 md:py-24 bg-white overflow-x-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 w-full">
+        <div className="flex flex-col md:flex-row gap-12 lg:gap-16 items-start">
+
           {/* Información (Izquierda) */}
           <motion.div
-            className="flex-1 w-full flex justify-center md:justify-end"
-            initial={{ opacity: 0, x: -100 }}
+            className="flex-1 w-full flex flex-col text-center md:text-left"
+            initial={{ opacity: 0, x: -30 }} // Suavizado de -100 a -30 para evitar desbordamiento lateral
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-50px" }}
           >
-            <Box className="flex-1">
-              <Text size="2" weight="bold" className="tracking-[0.2em] uppercase text-[#b8938d] mb-4">
-                Contacto
-              </Text>
-              <h2 className="text-5xl font-serif text-gray-800 mb-8">
-                Iniciemos una <span className="italic">conversación</span>.
-              </h2>
-              <Flex direction="column" gap="4">
-                <Flex align="center" gap="3">
-                  <Box className="p-3 bg-[#9fb1a5]/10 rounded-full text-[#9fb1a5]"><Mail size={20} /></Box>
-                  <Text className="text-gray-700 font-medium">lucasestudios2021@gmail.com</Text>
-                </Flex>
-                <Flex align="center" gap="3">
-                  <Box className="p-3 bg-[#9fb1a5]/10 rounded-full text-[#9fb1a5]"><Phone size={20} /></Box>
-                  <Text className="text-gray-700 font-medium">+54 9 3537669534</Text>
-                </Flex>
-              </Flex>
-            </Box>
+            <span className="block text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-[#b8938d] mb-3">
+              Contacto
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-800 mb-6 leading-tight">
+              Iniciemos una <span className="italic">conversación</span>.
+            </h2>
+
+            {/* Contenedor de métodos de contacto */}
+            <div className="flex flex-col gap-4 items-center md:items-start">
+              <div className="flex items-center gap-3 text-left w-full max-w-sm md:max-w-none">
+                <div className="p-3 bg-[#9fb1a5]/10 rounded-full text-[#9fb1a5] shrink-0">
+                  <Mail size={20} />
+                </div>
+                <span className="text-gray-700 font-medium text-sm sm:text-base break-all">
+                  lucasestudios2021@gmail.com
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3 text-left w-full max-w-sm md:max-w-none">
+                <div className="p-3 bg-[#9fb1a5]/10 rounded-full text-[#9fb1a5] shrink-0">
+                  <Phone size={20} />
+                </div>
+                <span className="text-gray-700 font-medium text-sm sm:text-base">
+                  +54 9 3537669534
+                </span>
+              </div>
+            </div>
           </motion.div>
 
           {/* Formulario (Derecha) */}
           <motion.div
             className="flex-1 w-full"
-            initial={{ opacity: 0, x: 100 }}
+            initial={{ opacity: 0, x: 30 }} // Suavizado de 100 a 30
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-50px" }}
           >
-            <Box className="flex-1 bg-[#faf9f6] p-10 rounded-[40px] shadow-sm relative">
+            {/* Caja del formulario */}
+            <div className="bg-[#faf9f6] p-6 sm:p-10 rounded-4xl sm:rounded-[40px] shadow-xs relative">
               {isSent ? (
-                <Flex direction="column" align="center" justify="center" className="h-full py-10 animate-in fade-in zoom-in duration-500">
-                  <CheckCircle2 size={60} className="text-[#9fb1a5] mb-4" />
-                  <Text size="5" weight="bold" className="text-gray-800 mb-2 font-serif text-center">¡Mensaje enviado!</Text>
-                  <Text className="text-gray-600 text-center">Gracias por escribir, Lucas te responderá a la brevedad.</Text>
-                  <Button variant="ghost" className="mt-6 text-[#b8938d] cursor-pointer" onClick={() => setIsSent(false)}>Enviar otro mensaje</Button>
-                </Flex>
+                <div className="flex flex-col items-center justify-center py-10 text-center animate-in fade-in zoom-in duration-500">
+                  <CheckCircle2 size={60} className="text-[#9fb1a5] mb-4 shrink-0" />
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2 font-serif">
+                    ¡Mensaje enviado!
+                  </h3>
+                  <p className="text-sm text-gray-600 max-w-xs">
+                    Gracias por escribir, Lucas te responderá a la brevedad.
+                  </p>
+                  <button
+                    type="button"
+                    className="mt-6 text-sm font-semibold text-[#b8938d] hover:text-[#a67e78] cursor-pointer transition-colors"
+                    onClick={() => setIsSent(false)}
+                  >
+                    Enviar otro mensaje
+                  </button>
+                </div>
               ) : (
-                <form ref={form} onSubmit={sendEmail} className="space-y-6">
+                <form ref={form} onSubmit={sendEmail} className="space-y-5 md:space-y-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Nombre completo</label>
-                    <input name="user_name" required type="text" className="w-full bg-white border border-gray-100 rounded-xl p-4 focus:ring-2 focus:ring-[#9fb1a5] outline-none transition-all" />
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                      Nombre completo
+                    </label>
+                    <input
+                      name="user_name"
+                      required
+                      type="text"
+                      className="w-full bg-white border border-gray-100 rounded-xl p-3.5 sm:p-4 text-sm sm:text-base focus:ring-2 focus:ring-[#9fb1a5]/50 outline-none transition-all"
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input name="user_email" required type="email" className="w-full bg-white border border-gray-100 rounded-xl p-4 focus:ring-2 focus:ring-[#9fb1a5] outline-none transition-all" />
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                      Email
+                    </label>
+                    <input
+                      name="user_email"
+                      required
+                      type="email"
+                      className="w-full bg-white border border-gray-100 rounded-xl p-3.5 sm:p-4 text-sm sm:text-base focus:ring-2 focus:ring-[#9fb1a5]/50 outline-none transition-all"
+                    />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Mensaje</label>
-                    <textarea name="message" required rows={4} className="w-full bg-white border border-gray-100 rounded-xl p-4 focus:ring-2 focus:ring-[#9fb1a5] outline-none transition-all resize-none"></textarea>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                      Mensaje
+                    </label>
+                    <textarea
+                      name="message"
+                      required
+                      rows={4}
+                      className="w-full bg-white border border-gray-100 rounded-xl p-3.5 sm:p-4 text-sm sm:text-base focus:ring-2 focus:ring-[#9fb1a5]/50 outline-none transition-all resize-none"
+                    />
                   </div>
-                  <Button
-                    size="4"
+
+                  {/* Botón de Enviar Nativo */}
+                  <button
+                    type="submit"
                     disabled={isSending}
-                    className={`w-full cursor-pointer bg-[#b8938d] transition-all rounded-xl h-14 text-lg font-serif ${isSending ? 'opacity-50' : 'hover:bg-[#a67e78]'}`}
+                    className={`w-full flex items-center justify-center cursor-pointer bg-[#b8938d] text-white transition-all rounded-xl h-12 sm:h-14 text-base sm:text-lg font-serif ${isSending ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#a67e78] active:scale-[0.98]'
+                      }`}
                   >
                     {isSending ? "Enviando..." : "Enviar consulta"}
-                  </Button>
-                  <Text size="1" className="text-gray-400 block text-center italic pt-4">
+                  </button>
+
+                  <span className="text-[11px] text-gray-400 block text-center italic pt-2 leading-normal">
                     Toda la información compartida es tratada con absoluta confidencialidad.
-                  </Text>
+                  </span>
                 </form>
               )}
-            </Box>
+            </div>
           </motion.div>
-        </Flex>
-      </Container>
+
+        </div>
+      </div>
     </section>
   );
 }
